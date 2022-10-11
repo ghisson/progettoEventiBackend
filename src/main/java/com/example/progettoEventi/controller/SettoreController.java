@@ -23,7 +23,6 @@ public class SettoreController {
 	
 	@CrossOrigin(origins ="*")
 	@GetMapping("/getSettore/{id}")
-	
 	public ResponseEntity<Object> getSettore(@PathVariable long id){
 		Errore error=new Errore();
 		Optional<Settore> set= settoreRepository.findById(id);
