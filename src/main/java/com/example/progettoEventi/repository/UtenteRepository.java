@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.progettoEventi.model.Utente;
 
-public interface UserRepository extends JpaRepository<Utente, Long> {
+public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	
 	Utente findByEmail(String email);
 	Utente findByCodiceFiscale(String codice_fiscale);
