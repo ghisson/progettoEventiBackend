@@ -12,6 +12,7 @@ import javax.persistence.Id;
 public class Utente {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id_utente")
 	private long idUtente;
 
 	private String nome;
