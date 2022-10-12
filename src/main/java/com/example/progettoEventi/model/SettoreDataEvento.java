@@ -72,4 +72,18 @@ public class SettoreDataEvento {
 	}
 	
 	
+	@ManyToOne
+    @JoinColumn(name = "fk_data_evento", referencedColumnName = "id_data_evento")
+    @JsonIgnoreProperties("settoreDataEventi")
+	
+	private DataEvento dataEvento;
+	
+	public DataEvento getDataEvento() {
+		return dataEvento;
+	}
+	public void setDataEvento(DataEvento dataEvento) {
+		this.dataEvento=dataEvento;
+	}
+	
+	
 }
