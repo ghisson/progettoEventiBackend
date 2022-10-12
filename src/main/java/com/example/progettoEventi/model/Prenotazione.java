@@ -20,7 +20,6 @@ public class Prenotazione {
 	private long idPrenotazione;
 	@Column(name = "data_prenotazione")
 	private Date dataPrenotazione;
-	//fk_utente
 	//fk_settore_data_evento
 	
 	public Prenotazione() {}
