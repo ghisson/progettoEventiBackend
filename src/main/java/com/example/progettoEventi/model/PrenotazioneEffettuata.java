@@ -44,10 +44,10 @@ public class PrenotazioneEffettuata implements Serializable {
 	private int postiPrenotati;
 	@Column(name = "prezzo_biglietto")
 	private double prezzoBiglietto;
-	@Column(name = "recensione")
+	@Column(name = "recensione", nullable=true)
 	private String recensione;
-	@Column(name = "voto_recensione")
-	private int votoRecensione;
+	@Column(name = "voto_recensione", nullable=true)
+	private Integer votoRecensione;
 	@Column(name = "numero_carta")
 	private String numeroCarta;
 	@Column(name = "cvv_carta")
@@ -63,7 +63,7 @@ public class PrenotazioneEffettuata implements Serializable {
 
 	public PrenotazioneEffettuata(long idPrenotazioneEffettuata, Date dataPrenotazione, String nomeLuogo,
 			String ubicazione, String nomeSettore, String categoriaEvento, String autoriEvento, Date dataInizio,
-			Date dataFine, int postiPrenotati, double prezzoBiglietto, String recensione, int votoRecensione,
+			Date dataFine, int postiPrenotati, double prezzoBiglietto, String recensione, Integer votoRecensione,
 			String numeroCarta, int cvvCarta, Date dataScadenza, String intestatarioCarta) {
 		super();
 		this.idPrenotazioneEffettuata = idPrenotazioneEffettuata;
@@ -181,11 +181,11 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.recensione = recensione;
 	}
 
-	public int getVotoRecensione() {
+	public Integer getVotoRecensione() {
 		return votoRecensione;
 	}
 
-	public void setVotoRecensione(int votoRecensione) {
+	public void setVotoRecensione(Integer votoRecensione) {
 		this.votoRecensione = votoRecensione;
 	}
 

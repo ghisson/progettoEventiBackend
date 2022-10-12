@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Prenotazione {
@@ -43,5 +47,18 @@ public class Prenotazione {
 		this.dataPrenotazione = dataPrenotazione;
 	}
 	
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_utente", referencedColumnName = "id_utente")
+    @JsonIgnoreProperties("prenotazioni")
+	
+	private Utente utente;
+	
+	public Utente getUtente() {
+		return utente;
+	}
+	public void setUtente(Utente utente) {
+		this.utente=utente;
+	}
 	
 }

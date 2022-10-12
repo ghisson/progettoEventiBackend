@@ -162,6 +162,17 @@ public class Utente {
 		this.prenotazioniEffettuate=prenotazioniEffettuate;
 	}
 	
+	@OneToMany( mappedBy = "utente")
+    @JsonIgnoreProperties("utente")
+	
+	private List<Prenotazione> prenotazioni;
+		
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
+	}
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni=prenotazioni;
+	}
 
  
 	
