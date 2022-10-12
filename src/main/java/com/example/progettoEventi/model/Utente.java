@@ -1,12 +1,18 @@
 package com.example.progettoEventi.model;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Utente {
@@ -142,6 +148,20 @@ public class Utente {
 				+ ", email=" + email + ", password=" + password + ", data_di_nascita=" + data_di_nascita
 				+ ", luogo_di_nascita=" + luogo_di_nascita + ", codice_fiscale=" + codiceFiscale + "]";
 	}
+	
+	
+	@OneToMany( mappedBy = "utente")
+    @JsonIgnoreProperties("utente")
+	
+	private List<PrenotazioneEffettuata> prenotazioniEffettuate;
+		
+	public List<PrenotazioneEffettuata> getPrenotazioniEffettuate() {
+		return prenotazioniEffettuate;
+	}
+	public void setPrenotazioniEffettuate(List<PrenotazioneEffettuata> prenotazioniEffettuate) {
+		this.prenotazioniEffettuate=prenotazioniEffettuate;
+	}
+	
 
  
 	

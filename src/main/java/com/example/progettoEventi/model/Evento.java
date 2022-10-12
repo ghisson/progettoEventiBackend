@@ -1,10 +1,15 @@
 package com.example.progettoEventi.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Evento {
@@ -63,6 +68,18 @@ public class Evento {
 	public String toString() {
 		return "Evento [idEvento=" + idEvento + ", nomeEvento=" + nomeEvento + ", categoriaEvento=" + categoriaEvento
 				+ ", autoreEvento=" + autoreEvento + ", descrizioneEvento=" + descrizioneEvento + "]";
+	}
+	
+	@OneToMany( mappedBy = "evento")
+    @JsonIgnoreProperties("evento")
+	
+	private List<DataEvento> dataEventi;
+		
+	public List<DataEvento> getDataEventi() {
+		return dataEventi;
+	}
+	public void setSettori(List<DataEvento> dataEventi) {
+		this.dataEventi=dataEventi;
 	}
 	
 }

@@ -2,11 +2,17 @@ package com.example.progettoEventi.model;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class PrenotazioneEffettuata {
 	@Id
@@ -209,5 +215,20 @@ public class PrenotazioneEffettuata {
 	public void setIntestatarioCarta(String intestatarioCarta) {
 		this.intestatarioCarta = intestatarioCarta;
 	}
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_id_utente", referencedColumnName = "id_utente")
+    @JsonIgnoreProperties("prenotazioniEffettuate")
+	
+	private Utente utente;
+	
+	public Utente getUtente() {
+		return utente;
+	}
+	
+	public void setUtente(Utente utente) {
+		this.utente=utente;
+	}
+	
 	
 }

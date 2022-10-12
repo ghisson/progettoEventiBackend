@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class DataEvento {
 	@Id
@@ -49,6 +53,20 @@ public class DataEvento {
 	public String toString() {
 		return "DataEvento [idDataEvento=" + idDataEvento + ", dataInizio=" + dataInizio + ", dataFine=" + dataFine
 				+ "]";
+	}
+	
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_id_evento", referencedColumnName = "id_evento")
+    @JsonIgnoreProperties("dataEventi")
+	
+	private Evento evento;
+	
+	public Evento getEvento() {
+		return evento;
+	}
+	public void setLuogo(Evento evento) {
+		this.evento=evento;
 	}
 	
 	
