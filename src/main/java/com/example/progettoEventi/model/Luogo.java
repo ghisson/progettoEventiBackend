@@ -77,15 +77,16 @@ public class Luogo implements Serializable{
 	@JoinColumn(name="fk_id_luogo")
 	 */
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "luogo", cascade = CascadeType.ALL)
+	@OneToMany( mappedBy = "luogo")
     @JsonIgnoreProperties("luogo")
+	
 	private List<Settore> settori;
 		
-		public List<Settore> getSettori() {
-			return settori;
-		}
-		public void setSettori(List<Settore> settori) {
-			this.settori=settori;
-		}
+	public List<Settore> getSettori() {
+		return settori;
+	}
+	public void setSettori(List<Settore> settori) {
+		this.settori=settori;
+	}
 	
 }

@@ -77,7 +77,7 @@ public class Settore implements Serializable {
 	*/
 
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
     @JoinColumn(name = "fk_id_luogo", referencedColumnName = "id_luogo")
     @JsonIgnoreProperties("settori")
 	
@@ -89,6 +89,6 @@ public class Settore implements Serializable {
 	public void setLuogo(Luogo luogo) {
 		this.luogo=luogo;
 	}
-		 
+
 	
 }
