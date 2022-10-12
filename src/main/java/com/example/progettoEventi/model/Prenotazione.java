@@ -60,4 +60,19 @@ public class Prenotazione {
 		this.utente=utente;
 	}
 	
+	
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_settore_data_evento", referencedColumnName = "id_settore_data_evento")
+    @JsonIgnoreProperties("prenotazioni")
+	
+	private SettoreDataEvento settoreDataEvento;
+	
+	public SettoreDataEvento getSettoreDataEvento() {
+		return settoreDataEvento;
+	}
+	public void setSettoreDataEvento(SettoreDataEvento settoreDataEvento) {
+		this.settoreDataEvento=settoreDataEvento;
+	}
+	
 }
