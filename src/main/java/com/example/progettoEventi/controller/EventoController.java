@@ -25,7 +25,7 @@ public class EventoController {
 		Errore error= new Errore();
 		Optional<Evento> event=eventoRepository.findById(id);
 		if(event.isPresent()) {
-			System.out.println("questo non lo vedo");
+
 			return new ResponseEntity<Object>(event.get(), HttpStatus.OK);
 		}
 		error.setError("evento non trovato");
