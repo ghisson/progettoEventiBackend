@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -67,7 +71,14 @@ public class Luogo implements Serializable{
 	}
 
 	
-	@OneToMany(mappedBy="luogo")
+	/*
+	@JsonManagedReference
+	@OneToMany
+	@JoinColumn(name="fk_id_luogo")
+	 */
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "luogo", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("luogo")
 	private List<Settore> settori;
 		
 		public List<Settore> getSettori() {

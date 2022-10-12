@@ -6,13 +6,16 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Settore implements Serializable {
@@ -66,14 +69,19 @@ public class Settore implements Serializable {
 		return "Settore [idSettore=" + idSettore + ", nomeSettore=" + nomeSettore + ", numeroPosti=" + numeroPosti
 				+ ", luogo=" + luogo + "]";
 	}
-
-
-
-
+	
+	/*
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="fk_id_luogo")
-	private Luogo luogo;
+	*/
+
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_id_luogo", referencedColumnName = "id_luogo")
+    @JsonIgnoreProperties("settori")
 	
+	private Luogo luogo;
 	
 	public Luogo getLuogo() {
 		return luogo;
