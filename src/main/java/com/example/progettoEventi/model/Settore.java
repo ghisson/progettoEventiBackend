@@ -2,6 +2,7 @@ package com.example.progettoEventi.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -75,6 +77,18 @@ public class Settore implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="fk_id_luogo")
 	*/
+	
+	@OneToMany( mappedBy = "settore")
+    @JsonIgnoreProperties("settore")
+	
+	private List<SettoreDataEvento> settoreDataEventi;
+		
+	public List<SettoreDataEvento> getSettoreDataEventi() {
+		return settoreDataEventi;
+	}
+	public void setSettoreDataEventi(List<SettoreDataEvento> settoreDataEventi) {
+		this.settoreDataEventi=settoreDataEventi;
+	}
 
 
 	@ManyToOne

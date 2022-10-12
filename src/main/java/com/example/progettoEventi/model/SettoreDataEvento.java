@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class SettoreDataEvento {
@@ -54,6 +58,18 @@ public class SettoreDataEvento {
 				+ "]";
 	}
 	
+	@ManyToOne
+    @JoinColumn(name = "fk_settore", referencedColumnName = "id_settore")
+    @JsonIgnoreProperties("settoreDataEventi")
+	
+	private Settore settore;
+	
+	public Settore getSettore() {
+		return settore;
+	}
+	public void setSettore(Settore settore) {
+		this.settore=settore;
+	}
 	
 	
 }
