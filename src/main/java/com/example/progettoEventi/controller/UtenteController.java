@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.progettoEventi.model.Errore;
 import com.example.progettoEventi.model.SettoreDataEvento;
 import com.example.progettoEventi.model.Utente;
+import com.example.progettoEventi.model.UtenteLogin;
 import com.example.progettoEventi.repository.UtenteRepository;
 
 @Controller // This means that this class is a Controller
@@ -37,14 +38,14 @@ public class UtenteController {
 	
       Errore errore=new Errore();
 	  
-	  Utente ut=utenteRepository.findByCodiceFiscale(utente.getCodice_fiscale());
-	  if(ut!=null) {
+      Optional<Utente> ut=utenteRepository.findByCodiceFiscale(utente.getCodice_fiscale());
+	  if(ut.isPresent()) {
 		  errore.setError("codice fiscale già inserito");
 		  return new ResponseEntity<Object>(errore,HttpStatus.BAD_REQUEST);
 	  }
 	  
 	  ut=utenteRepository.findByEmail(utente.getEmail());
-	  if(ut!=null) {
+	  if(ut.isPresent()) {
 		  errore.setError("email già inserita");
 		  return new ResponseEntity<Object>(errore,HttpStatus.BAD_REQUEST);
 	  }
@@ -58,7 +59,7 @@ public class UtenteController {
   
   
   @CrossOrigin(origins ="*")
-	@GetMapping("/getUtente/{id}")
+  @GetMapping("/getUtente/{id}")
 	public ResponseEntity<Object> getUtente(@PathVariable long id){
 		Errore error=new Errore();
 		Optional<Utente> ut= utenteRepository.findById(id);
@@ -69,5 +70,57 @@ public class UtenteController {
 		 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
 	}
 
-
+  @CrossOrigin(origins = "*")
+  @PostMapping("/login")
+  public ResponseEntity<Object> postLogin(@RequestBody UtenteLogin user) {
+      Errore errore=new Errore();
+      Optional<Utente> ut=utenteRepository.findByEmail(user.getEmail());
+      if (ut.isPresent()) {
+    	  Utente utn = ut.get();
+    	  if(utn.getPassword().equals(user.getPassword())) {
+    		  return new ResponseEntity<Object>(utn,HttpStatus.OK);
+    	  }
+    	 errore.setError("password non corretta per email associata");
+ 		 return new ResponseEntity<Object>(errore, HttpStatus.BAD_REQUEST);
+      } 
+      errore.setError("email non presente");
+      return new ResponseEntity<Object>(errore, HttpStatus.BAD_REQUEST);
+      
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
