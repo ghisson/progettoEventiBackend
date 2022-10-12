@@ -1,6 +1,8 @@
 package com.example.progettoEventi.model;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,10 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
-public class PrenotazioneEffettuata {
+public class PrenotazioneEffettuata implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id_prenotazione_effettuata")
@@ -228,6 +233,18 @@ public class PrenotazioneEffettuata {
 	
 	public void setUtente(Utente utente) {
 		this.utente=utente;
+	}
+	
+	@OneToMany( mappedBy = "prenotazioneEffettuata" )
+    @JsonIgnoreProperties("prenotazioneEffettuata")
+	
+	private List<UtenteInvitato> utentiInvitati;
+		
+	public List<UtenteInvitato> getUtentiInvitati() {
+		return utentiInvitati;
+	}
+	public void setUtentiInvitati(List<UtenteInvitato> utentiInvitati) {
+		this.utentiInvitati=utentiInvitati;
 	}
 	
 	

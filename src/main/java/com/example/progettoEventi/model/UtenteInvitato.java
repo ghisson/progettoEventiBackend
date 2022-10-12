@@ -1,15 +1,24 @@
 package com.example.progettoEventi.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class UtenteInvitato {
+public class UtenteInvitato implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -50,6 +59,19 @@ public class UtenteInvitato {
 		return "UtenteInvitato [idUtenteInvitato=" + idUtenteInvitato + ", codiceFiscale=" + codiceFiscale + "]";
 	}
 	
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_prenotazione_effettuata", referencedColumnName = "id_prenotazione_effettuata")
+	@JsonIgnoreProperties("utentiInvitati")
+	
+	private PrenotazioneEffettuata prenotazioneEffettuata;
+	
+	public PrenotazioneEffettuata getPrenotazioneEffettuata() {
+		return prenotazioneEffettuata;
+	}
+	public void setPrenotazioneEffettuata(PrenotazioneEffettuata prenotazioneEffettuata) {
+		this.prenotazioneEffettuata=prenotazioneEffettuata;
+	}
 	
 	
 	
