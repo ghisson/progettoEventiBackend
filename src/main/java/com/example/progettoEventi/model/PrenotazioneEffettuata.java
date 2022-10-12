@@ -248,4 +248,18 @@ public class PrenotazioneEffettuata implements Serializable {
 	}
 	
 	
+	@ManyToOne
+    @JoinColumn(name = "fk_settore_data_evento", referencedColumnName = "id_settore_data_evento")
+    @JsonIgnoreProperties("prenotazioneEffettuata")
+	
+	private SettoreDataEvento settoreDataEvento;
+	
+	public SettoreDataEvento getSettoreDataEvento() {
+		return settoreDataEvento;
+	}
+	public void setSettoreDataEvento(SettoreDataEvento settoreDataEvento) {
+		this.settoreDataEvento=settoreDataEvento;
+	}
+	
+	
 }
