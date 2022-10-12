@@ -73,7 +73,7 @@ public class DataEvento {
 	
 	
 	@OneToMany( mappedBy = "dataEvento")
-    @JsonIgnoreProperties("data_evento")
+    @JsonIgnoreProperties("dataEvento")
 	
 	private List<SettoreDataEvento> settoreDataEventi;
 		
