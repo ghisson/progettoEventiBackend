@@ -1,14 +1,22 @@
 package com.example.progettoEventi.model;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
-public class Luogo {
+public class Luogo implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id_luogo")
@@ -26,9 +34,12 @@ public class Luogo {
 		this.ubicazione=ubicazione;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Luogo [idLuogo=" + idLuogo + ", nomeLuogo=" + nomeLuogo + ", ubicazione=" + ubicazione + "]";
+		return "Luogo [idLuogo=" + idLuogo + ", nomeLuogo=" + nomeLuogo + ", ubicazione=" + ubicazione + ", settori="
+				+ settori + "]";
 	}
 
 	public long getIdLuogo() {
@@ -55,4 +66,15 @@ public class Luogo {
 		this.ubicazione = ubicazione;
 	}
 
+	
+	@OneToMany(mappedBy="luogo")
+	private List<Settore> settori;
+		
+		public List<Settore> getSettori() {
+			return settori;
+		}
+		public void setSettori(List<Settore> settori) {
+			this.settori=settori;
+		}
+	
 }

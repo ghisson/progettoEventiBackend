@@ -28,7 +28,6 @@ public class LuogoController {
 		Errore error=new Errore();
 		Optional<Luogo> set = luogoRepository.findById(id);
 		 if (set.isPresent()) {
-			 System.out.println("pronto");
 			 return new ResponseEntity<Object>(set.get(),HttpStatus.OK);
 		 }
 		 error.setError("settore non trovato");

@@ -1,15 +1,21 @@
 package com.example.progettoEventi.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Settore {
+public class Settore implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id_settore")
@@ -53,9 +59,28 @@ public class Settore {
 		this.numeroPosti = numeroPosti;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Settore [idSettore=" + idSettore + ", nomeSettore=" + nomeSettore + ", numeroPosti=" + numeroPosti
-				+ "]";
+				+ ", luogo=" + luogo + "]";
 	}
+
+
+
+
+	@ManyToOne
+	@JoinColumn(name="fk_id_luogo")
+	private Luogo luogo;
+	
+	
+	public Luogo getLuogo() {
+		return luogo;
+	}
+	public void setLuogo(Luogo luogo) {
+		this.luogo=luogo;
+	}
+		 
+	
 }
