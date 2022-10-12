@@ -78,7 +78,7 @@ public class Evento {
 	public List<DataEvento> getDataEventi() {
 		return dataEventi;
 	}
-	public void setSettori(List<DataEvento> dataEventi) {
+	public void setDataEventi(List<DataEvento> dataEventi) {
 		this.dataEventi=dataEventi;
 	}
 	
