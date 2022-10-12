@@ -100,4 +100,18 @@ public class SettoreDataEvento {
 		this.prenotazioniEffettuate=prenotazioniEffettuate;
 	}
 	
+	
+	
+	@OneToMany( mappedBy = "settoreDataEvento")
+    @JsonIgnoreProperties("settoreDataEvento")
+	
+	private List<Prenotazione> prenotazioni;
+		
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
+	}
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni=prenotazioni;
+	}
+	
 }
