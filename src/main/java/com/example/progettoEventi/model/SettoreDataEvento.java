@@ -114,4 +114,6 @@ public class SettoreDataEvento {
 		this.prenotazioni=prenotazioni;
 	}
 	
+	
+
 }

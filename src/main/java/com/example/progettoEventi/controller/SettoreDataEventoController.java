@@ -2,8 +2,11 @@ package com.example.progettoEventi.controller;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,8 +54,10 @@ public class SettoreDataEventoController {
 	public ResponseEntity<List<SettoreDataEvento>> getAllSettoreDataEvento(){
 		
 		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
+		
+		 Collections.sort(ret, (o1, o2) -> o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio()));
 		 
-		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
 	
 	
@@ -69,8 +74,7 @@ public class SettoreDataEventoController {
 			}
 		}
 		ret.removeAll(eventiPassati);
-		
-		
+		Collections.sort(ret, (o1, o2) -> o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio()));
 		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
 
