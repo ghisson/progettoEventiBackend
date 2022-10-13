@@ -1,6 +1,8 @@
 package com.example.progettoEventi.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.progettoEventi.model.Errore;
 import com.example.progettoEventi.model.SettoreDataEvento;
+import com.example.progettoEventi.repository.DataEventoRepository;
 import com.example.progettoEventi.repository.SettoreDataEventoRepository;
 import com.example.progettoEventi.repository.SettoreRepository;
+import java.sql.Date;
+import java.time.LocalDateTime;
+
+
 
 @Controller
 @RequestMapping(path="/settoreDataEvento")
@@ -23,6 +30,7 @@ public class SettoreDataEventoController {
 	
 	@Autowired
 	private SettoreDataEventoRepository settoreDataEventoRepository;
+	
 	
 	
 	@CrossOrigin(origins ="*")
@@ -35,6 +43,35 @@ public class SettoreDataEventoController {
 		 }
 		 error.setError("settore data evento non trovato");
 		 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@CrossOrigin(origins ="*")
+	@GetMapping("/getAll")
+	public ResponseEntity<List<SettoreDataEvento>> getAllSettoreDataEvento(){
+		
+		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
+		 
+		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@CrossOrigin(origins ="*")
+	@GetMapping("/getAllActive")
+	public ResponseEntity<List<SettoreDataEvento>> getAllSettoreDataEventoActive(){
+		
+		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
+		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
+		LocalDateTime now = LocalDateTime.now(); 		
+		for(SettoreDataEvento settoreDataEvento:ret) {
+			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
+				eventiPassati.add(settoreDataEvento);
+			}
+		}
+		ret.removeAll(eventiPassati);
+		
+		
+		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
 
 }

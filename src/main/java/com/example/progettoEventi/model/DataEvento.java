@@ -1,6 +1,7 @@
 package com.example.progettoEventi.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,14 +21,13 @@ public class DataEvento {
 	@Column(name="id_data_evento")
 	private long idDataEvento;
 	@Column(name="data_inizio")
-	private Date dataInizio;
+	private LocalDateTime dataInizio;
 	@Column(name="data_fine")
-	private Date dataFine;
+	private LocalDateTime dataFine;
 	//fk_id_evento
 	
-	
 	public DataEvento() {}
-	public DataEvento(long idDataEvento, Date dataInizio, Date dataFine) {
+	public DataEvento(long idDataEvento, LocalDateTime dataInizio, LocalDateTime dataFine) {
 		this.idDataEvento=idDataEvento;
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
@@ -39,16 +39,16 @@ public class DataEvento {
 	public void setIdDataEvento(long idDataEvento) {
 		this.idDataEvento = idDataEvento;
 	}
-	public Date getDataInizio() {
+	public LocalDateTime getDataInizio() {
 		return dataInizio;
 	}
-	public void setDataInizio(Date dataInizio) {
+	public void setDataInizio(LocalDateTime dataInizio) {
 		this.dataInizio = dataInizio;
 	}
-	public Date getDataFine() {
+	public LocalDateTime getDataFine() {
 		return dataFine;
 	}
-	public void setDataFine(Date dataFine) {
+	public void setDataFine(LocalDateTime dataFine) {
 		this.dataFine = dataFine;
 	}
 	@Override
