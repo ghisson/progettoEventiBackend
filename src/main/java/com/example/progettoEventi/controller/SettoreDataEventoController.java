@@ -55,8 +55,8 @@ public class SettoreDataEventoController {
 		
 		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
 		
-		 Collections.sort(ret, (o1, o2) -> o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio()));
-		 
+		ret=ret.stream().sorted((o1, o2)->o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio())).
+                collect(Collectors.toList());		 
 		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
 	
@@ -74,7 +74,8 @@ public class SettoreDataEventoController {
 			}
 		}
 		ret.removeAll(eventiPassati);
-		Collections.sort(ret, (o1, o2) -> o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio()));
+		ret=ret.stream().sorted((o1, o2)->o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio())).
+                collect(Collectors.toList());
 		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
 
