@@ -15,10 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.progettoEventi.model.Errore;
+import com.example.progettoEventi.model.Filtro;
 import com.example.progettoEventi.model.SettoreDataEvento;
+import com.example.progettoEventi.model.Utente;
 import com.example.progettoEventi.repository.DataEventoRepository;
 import com.example.progettoEventi.repository.SettoreDataEventoRepository;
 import com.example.progettoEventi.repository.SettoreRepository;
@@ -78,5 +82,75 @@ public class SettoreDataEventoController {
                 collect(Collectors.toList());
 		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
 	}
+	
+	
+	@CrossOrigin(origins ="*")
+	@PostMapping("/getAllByFilter")
+	public ResponseEntity<List<SettoreDataEvento>> getAllByFilter(@RequestBody Filtro filtro){
+		
+		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
+		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
+		List<SettoreDataEvento> eventiByFilter;
+
+		/*LocalDateTime now = LocalDateTime.now(); 		
+		for(SettoreDataEvento settoreDataEvento:ret) {
+			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
+				eventiPassati.add(settoreDataEvento);
+			}
+		}
+		ret.removeAll(eventiPassati);*/
+		
+		
+		//filtro by autore
+		if(!filtro.getAutore().equals("")) {
+			eventiByFilter=new ArrayList<SettoreDataEvento>();
+			for(SettoreDataEvento settoreDataEvento:ret) {
+				if(!settoreDataEvento.getDataEvento().getEvento().getAutoreEvento().toLowerCase().equals(filtro.getAutore().toLowerCase())) {
+					eventiByFilter.add(settoreDataEvento);
+				}
+			}
+			ret.removeAll(eventiByFilter);
+		}
+		
+		//filtro by categoria
+		if(!filtro.getCategoria().equals("")) {
+			eventiByFilter=new ArrayList<SettoreDataEvento>();
+			for(SettoreDataEvento settoreDataEvento:ret) {
+				if(!settoreDataEvento.getDataEvento().getEvento().getCategoriaEvento().equals(filtro.getCategoria())) {
+					eventiByFilter.add(settoreDataEvento);
+				}
+			}
+			ret.removeAll(eventiByFilter);
+		}
+		
+		//filtro by datainizio
+		if(filtro.getDataInizio() != null) {
+			eventiByFilter=new ArrayList<SettoreDataEvento>();
+			for(SettoreDataEvento settoreDataEvento:ret) {
+				if(settoreDataEvento.getDataEvento().getDataInizio().toLocalDate().isBefore(filtro.getDataInizio())) {
+					eventiByFilter.add(settoreDataEvento);
+				}
+			}
+			ret.removeAll(eventiByFilter);
+		}
+		
+		//filtro by datafine
+		if(filtro.getDataFine() != null) {
+			eventiByFilter=new ArrayList<SettoreDataEvento>();
+			for(SettoreDataEvento settoreDataEvento:ret) {
+				if(settoreDataEvento.getDataEvento().getDataInizio().toLocalDate().isAfter(filtro.getDataFine())) {
+					eventiByFilter.add(settoreDataEvento);
+				}
+			}
+			ret.removeAll(eventiByFilter);
+		}
+		
+		
+		ret=ret.stream().sorted((o1, o2)->o1.getDataEvento().getDataInizio().compareTo(o2.getDataEvento().getDataInizio())).
+                collect(Collectors.toList());
+		return new ResponseEntity<List<SettoreDataEvento>>(ret, HttpStatus.OK);
+	}
+	
+	
 
 }

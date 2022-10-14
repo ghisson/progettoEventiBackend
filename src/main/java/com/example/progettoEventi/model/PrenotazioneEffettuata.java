@@ -2,6 +2,8 @@ package com.example.progettoEventi.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +27,7 @@ public class PrenotazioneEffettuata implements Serializable {
 	@Column(name = "id_prenotazione_effettuata")
 	private long idPrenotazioneEffettuata;
 	@Column(name = "data_prenotazione")
-	private Date dataPrenotazione;
+	private LocalDateTime dataPrenotazione;
 	@Column(name = "nome_luogo")
 	private String nomeLuogo;
 	@Column(name = "ubicazione")
@@ -37,9 +39,9 @@ public class PrenotazioneEffettuata implements Serializable {
 	@Column(name = "autori_evento")
 	private String autoriEvento;
 	@Column(name = "data_inizio")
-	private Date dataInizio;
+	private LocalDateTime dataInizio;
 	@Column(name = "data_fine")
-	private Date dataFine;
+	private LocalDateTime dataFine;
 	@Column(name = "posti_prenotati")
 	private int postiPrenotati;
 	@Column(name = "prezzo_biglietto")
@@ -53,7 +55,7 @@ public class PrenotazioneEffettuata implements Serializable {
 	@Column(name = "cvv_carta")
 	private int cvvCarta;
 	@Column(name = "data_scadenza")
-	private Date dataScadenza;
+	private LocalDate dataScadenza;
 	@Column(name = "intestatario_carta")
 	private String intestatarioCarta;
 	//fk_settore_data_evento
@@ -61,10 +63,10 @@ public class PrenotazioneEffettuata implements Serializable {
 	
 	public PrenotazioneEffettuata() {}
 
-	public PrenotazioneEffettuata(long idPrenotazioneEffettuata, Date dataPrenotazione, String nomeLuogo,
-			String ubicazione, String nomeSettore, String categoriaEvento, String autoriEvento, Date dataInizio,
-			Date dataFine, int postiPrenotati, double prezzoBiglietto, String recensione, Integer votoRecensione,
-			String numeroCarta, int cvvCarta, Date dataScadenza, String intestatarioCarta) {
+	public PrenotazioneEffettuata(long idPrenotazioneEffettuata, LocalDateTime dataPrenotazione, String nomeLuogo,
+			String ubicazione, String nomeSettore, String categoriaEvento, String autoriEvento, LocalDateTime dataInizio,
+			LocalDateTime dataFine, int postiPrenotati, double prezzoBiglietto, String recensione, Integer votoRecensione,
+			String numeroCarta, int cvvCarta, LocalDate dataScadenza, String intestatarioCarta) {
 		super();
 		this.idPrenotazioneEffettuata = idPrenotazioneEffettuata;
 		this.dataPrenotazione = dataPrenotazione;
@@ -93,11 +95,11 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.idPrenotazioneEffettuata = idPrenotazioneEffettuata;
 	}
 
-	public Date getDataPrenotazione() {
+	public LocalDateTime getDataPrenotazione() {
 		return dataPrenotazione;
 	}
 
-	public void setDataPrenotazione(Date dataPrenotazione) {
+	public void setDataPrenotazione(LocalDateTime dataPrenotazione) {
 		this.dataPrenotazione = dataPrenotazione;
 	}
 
@@ -141,19 +143,19 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.autoriEvento = autoriEvento;
 	}
 
-	public Date getDataInizio() {
+	public LocalDateTime getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(Date dataInizio) {
+	public void setDataInizio(LocalDateTime dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 
-	public Date getDataFine() {
+	public LocalDateTime getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(Date dataFine) {
+	public void setDataFine(LocalDateTime dataFine) {
 		this.dataFine = dataFine;
 	}
 
@@ -205,11 +207,11 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.cvvCarta = cvvCarta;
 	}
 
-	public Date getDataScadenza() {
+	public LocalDate getDataScadenza() {
 		return dataScadenza;
 	}
 
-	public void setDataScadenza(Date dataScadenza) {
+	public void setDataScadenza(LocalDate dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
 
