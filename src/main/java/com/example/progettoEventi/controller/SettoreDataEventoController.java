@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.progettoEventi.model.Errore;
 import com.example.progettoEventi.model.Filtro;
+import com.example.progettoEventi.model.PrenotazioneEffettuata;
 import com.example.progettoEventi.model.SettoreDataEvento;
 import com.example.progettoEventi.model.Utente;
 import com.example.progettoEventi.repository.DataEventoRepository;
@@ -68,11 +69,28 @@ public class SettoreDataEventoController {
 	@CrossOrigin(origins ="*")
 	@GetMapping("/getAllActive")
 	public ResponseEntity<List<SettoreDataEvento>> getAllSettoreDataEventoActive(){
+
+		int postiOccupati=0;
 		
 		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
 		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
 		LocalDateTime now = LocalDateTime.now(); 		
 		for(SettoreDataEvento settoreDataEvento:ret) {
+			postiOccupati=0;
+			//check dei posti disponibili
+			postiOccupati=0;
+			
+			if(settoreDataEvento.getPrenotazioniEffettuate().size()>0) {
+				for(PrenotazioneEffettuata pr:settoreDataEvento.getPrenotazioniEffettuate()) {
+					postiOccupati+=pr.getPostiPrenotati();
+				}
+				//System.out.println(postiOccupati+" "+settoreDataEvento.getDataEvento().getEvento().getNomeEvento());
+			}
+			if(postiOccupati>=settoreDataEvento.getSettore().getNumeroPosti()) {
+				eventiPassati.add(settoreDataEvento);
+			}
+			//fine
+			
 			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
 				eventiPassati.add(settoreDataEvento);
 			}
