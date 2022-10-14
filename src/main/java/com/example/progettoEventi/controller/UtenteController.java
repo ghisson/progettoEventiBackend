@@ -51,9 +51,6 @@ public class UtenteController {
 	  }
 	  
 	  utenteRepository.save(utente);
-	  
-	  
-	  
 	  return new ResponseEntity<Object>(utente,HttpStatus.OK);
   }
   
@@ -66,7 +63,7 @@ public class UtenteController {
 		 if (ut.isPresent()) {
 			 return new ResponseEntity<Object>(ut.get(),HttpStatus.OK);
 		 }
-		 error.setError("settore data evento non trovato");
+		 error.setError("utente non trovato");
 		 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
 	}
 

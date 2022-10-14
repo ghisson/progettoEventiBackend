@@ -47,7 +47,28 @@ public class SettoreDataEventoController {
 		Errore error=new Errore();
 		Optional<SettoreDataEvento> set= settoreDataEventoRepository.findById(id);
 		 if (set.isPresent()) {
-			 return new ResponseEntity<Object>(set.get(),HttpStatus.OK);
+			 int postiOccupati=0;
+			 LocalDateTime now = LocalDateTime.now(); 
+			 SettoreDataEvento settoreDataEvento= set.get();
+				
+				if(settoreDataEvento.getPrenotazioniEffettuate().size()>0) {
+					for(PrenotazioneEffettuata pr:settoreDataEvento.getPrenotazioniEffettuate()) {
+						postiOccupati+=pr.getPostiPrenotati();
+					}
+					//System.out.println(postiOccupati+" "+settoreDataEvento.getDataEvento().getEvento().getNomeEvento());
+				}
+				if(postiOccupati>=settoreDataEvento.getSettore().getNumeroPosti()) {
+					error.setError("non ci sono più posti disponibili");
+					return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+				}if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
+					error.setError("l'evento per cui stai prenotando è già passato");
+					 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+				}
+				else {
+					
+					settoreDataEvento.setPostiDisponibili(settoreDataEvento.getSettore().getNumeroPosti()-postiOccupati);
+				}
+			 return new ResponseEntity<Object>(settoreDataEvento,HttpStatus.OK);
 		 }
 		 error.setError("settore data evento non trovato");
 		 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
