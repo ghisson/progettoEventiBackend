@@ -117,7 +117,7 @@ public class SettoreDataEventoController {
 		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
 		List<SettoreDataEvento> eventiByFilter;
 
-		/*LocalDateTime now = LocalDateTime.now(); 		
+		LocalDateTime now = LocalDateTime.now(); 		
 		for(SettoreDataEvento settoreDataEvento:ret) {
 		
 			//check dei posti disponibili
@@ -137,11 +137,13 @@ public class SettoreDataEventoController {
 			}
 			//fine
 			
-			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
+			
+			//RIMOZIONE EVENTI PASSATI
+			/*if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
 				eventiPassati.add(settoreDataEvento);
-			}
+			}*/
 		}
-		ret.removeAll(eventiPassati);*/
+		ret.removeAll(eventiPassati);
 		
 		
 		//filtro by autore
