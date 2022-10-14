@@ -76,7 +76,6 @@ public class SettoreDataEventoController {
 		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
 		LocalDateTime now = LocalDateTime.now(); 		
 		for(SettoreDataEvento settoreDataEvento:ret) {
-			postiOccupati=0;
 			//check dei posti disponibili
 			postiOccupati=0;
 			
@@ -88,6 +87,12 @@ public class SettoreDataEventoController {
 			}
 			if(postiOccupati>=settoreDataEvento.getSettore().getNumeroPosti()) {
 				eventiPassati.add(settoreDataEvento);
+			}else {
+				/*
+				 * bisogna aggiungere una variabile che dice i posti disponibili
+				 * 
+				 */
+				settoreDataEvento.setPostiDisponibili(settoreDataEvento.getSettore().getNumeroPosti()-postiOccupati);
 			}
 			//fine
 			
@@ -106,12 +111,32 @@ public class SettoreDataEventoController {
 	@PostMapping("/getAllByFilter")
 	public ResponseEntity<List<SettoreDataEvento>> getAllByFilter(@RequestBody Filtro filtro){
 		
+		
+		int postiOccupati=0;
 		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
 		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
 		List<SettoreDataEvento> eventiByFilter;
 
 		/*LocalDateTime now = LocalDateTime.now(); 		
 		for(SettoreDataEvento settoreDataEvento:ret) {
+		
+			//check dei posti disponibili
+			postiOccupati=0;
+			
+			if(settoreDataEvento.getPrenotazioniEffettuate().size()>0) {
+				for(PrenotazioneEffettuata pr:settoreDataEvento.getPrenotazioniEffettuate()) {
+					postiOccupati+=pr.getPostiPrenotati();
+				}
+				//System.out.println(postiOccupati+" "+settoreDataEvento.getDataEvento().getEvento().getNomeEvento());
+			}
+			if(postiOccupati>=settoreDataEvento.getSettore().getNumeroPosti()) {
+				eventiPassati.add(settoreDataEvento);
+			}else {
+				
+				settoreDataEvento.setPostiDisponibili(settoreDataEvento.getSettore().getNumeroPosti()-postiOccupati);
+			}
+			//fine
+			
 			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
 				eventiPassati.add(settoreDataEvento);
 			}

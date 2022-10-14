@@ -29,6 +29,15 @@ public class SettoreDataEvento {
 	//fk_data_evento
 	//fk_settore
 	
+	private int postiDisponibili;
+	
+	public int getPostiDisponibili() {
+		return postiDisponibili;
+	}
+	public void setPostiDisponibili(int postiDisponibili) {
+		this.postiDisponibili=postiDisponibili;
+	}
+	
 	
 	public SettoreDataEvento() {}
 
