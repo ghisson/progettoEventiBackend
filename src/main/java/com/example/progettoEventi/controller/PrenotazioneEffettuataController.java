@@ -81,8 +81,7 @@ public class PrenotazioneEffettuataController {
 			errore.setError("Utente o SettoreDataEvento non trovati");
 			return new ResponseEntity<Object>(errore, HttpStatus.BAD_REQUEST);
 		}
-		
-		return new ResponseEntity<Object>("ciao", HttpStatus.OK);
+		return new ResponseEntity<Object>(supPren, HttpStatus.OK);
 
 	}
 
