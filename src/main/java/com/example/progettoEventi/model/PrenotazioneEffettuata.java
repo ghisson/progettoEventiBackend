@@ -38,6 +38,8 @@ public class PrenotazioneEffettuata implements Serializable {
 	private String categoriaEvento;
 	@Column(name = "autori_evento")
 	private String autoriEvento;
+	@Column(name = "nome_evento")
+	private String nomeEvento;
 	@Column(name = "data_inizio")
 	private LocalDateTime dataInizio;
 	@Column(name = "data_fine")
@@ -53,11 +55,13 @@ public class PrenotazioneEffettuata implements Serializable {
 	@Column(name = "numero_carta")
 	private String numeroCarta;
 	@Column(name = "cvv_carta")
-	private int cvvCarta;
+	private String cvvCarta;
 	@Column(name = "data_scadenza")
 	private LocalDate dataScadenza;
 	@Column(name = "intestatario_carta")
 	private String intestatarioCarta;
+	@Column(name = "descrizione_evento")
+	private String descrizioneEvento;
 	//fk_settore_data_evento
 	//fk_id_utente
 	
@@ -66,8 +70,9 @@ public class PrenotazioneEffettuata implements Serializable {
 	public PrenotazioneEffettuata(long idPrenotazioneEffettuata, LocalDateTime dataPrenotazione, String nomeLuogo,
 			String ubicazione, String nomeSettore, String categoriaEvento, String autoriEvento, LocalDateTime dataInizio,
 			LocalDateTime dataFine, int postiPrenotati, double prezzoBiglietto, String recensione, Integer votoRecensione,
-			String numeroCarta, int cvvCarta, LocalDate dataScadenza, String intestatarioCarta) {
+			String numeroCarta, String cvvCarta, LocalDate dataScadenza, String intestatarioCarta,String nomeEvento, String descrizioneEvento) {
 		super();
+		this.descrizioneEvento=descrizioneEvento;
 		this.idPrenotazioneEffettuata = idPrenotazioneEffettuata;
 		this.dataPrenotazione = dataPrenotazione;
 		this.nomeLuogo = nomeLuogo;
@@ -85,6 +90,31 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.cvvCarta = cvvCarta;
 		this.dataScadenza = dataScadenza;
 		this.intestatarioCarta = intestatarioCarta;
+		this.nomeEvento=nomeEvento;
+	}
+	
+	public PrenotazioneEffettuata(SettoreDataEvento sde, SupportoPrenotazione sp,Utente ut) {
+		this.dataPrenotazione = LocalDateTime.now();
+		this.descrizioneEvento=sde.getDataEvento().getEvento().getDescrizioneEvento();
+		this.nomeEvento=sde.getDataEvento().getEvento().getNomeEvento();
+		this.nomeLuogo = sde.getSettore().getLuogo().getNomeLuogo();
+		this.ubicazione = sde.getSettore().getLuogo().getUbicazione();
+		this.nomeSettore = sde.getSettore().getNomeSettore();
+		this.categoriaEvento = sde.getDataEvento().getEvento().getCategoriaEvento();
+		this.autoriEvento = sde.getDataEvento().getEvento().getAutoreEvento();
+		this.dataInizio = sde.getDataEvento().getDataInizio();
+		this.dataFine = sde.getDataEvento().getDataFine();
+		this.postiPrenotati = sp.getUtentiInvitati().length+1;
+		this.prezzoBiglietto = sde.getPrezzoBiglietto();
+		this.recensione = null;
+		this.votoRecensione = null;
+		this.numeroCarta = sp.getCarta();
+		this.cvvCarta = sp.getCvv();
+		this.dataScadenza = sp.getDataScadenza();
+		this.intestatarioCarta = sp.getIntestatario();
+		setUtente(ut);
+		setSettoreDataEvento(sde);
+		
 	}
 
 	public long getIdPrenotazioneEffettuata() {
@@ -199,11 +229,11 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.numeroCarta = numeroCarta;
 	}
 
-	public int getCvvCarta() {
+	public String getCvvCarta() {
 		return cvvCarta;
 	}
 
-	public void setCvvCarta(int cvvCarta) {
+	public void setCvvCarta(String cvvCarta) {
 		this.cvvCarta = cvvCarta;
 	}
 
@@ -223,6 +253,30 @@ public class PrenotazioneEffettuata implements Serializable {
 		this.intestatarioCarta = intestatarioCarta;
 	}
 	
+	
+	
+	public String getNomeEvento() {
+		return nomeEvento;
+	}
+
+	public void setNomeEvento(String nomeEvento) {
+		this.nomeEvento = nomeEvento;
+	}
+	
+	
+
+	public String getDescrizioneEvento() {
+		return descrizioneEvento;
+	}
+
+	public void setDescrizioneEvento(String descrizioneEvento) {
+		this.descrizioneEvento = descrizioneEvento;
+	}
+
+
+
+
+
 	@ManyToOne
     @JoinColumn(name = "fk_id_utente", referencedColumnName = "id_utente")
     @JsonIgnoreProperties("prenotazioniEffettuate")
@@ -262,6 +316,21 @@ public class PrenotazioneEffettuata implements Serializable {
 	public void setSettoreDataEvento(SettoreDataEvento settoreDataEvento) {
 		this.settoreDataEvento=settoreDataEvento;
 	}
+
+	@Override
+	public String toString() {
+		return "PrenotazioneEffettuata [idPrenotazioneEffettuata=" + idPrenotazioneEffettuata + ", dataPrenotazione="
+				+ dataPrenotazione + ", nomeLuogo=" + nomeLuogo + ", ubicazione=" + ubicazione + ", nomeSettore="
+				+ nomeSettore + ", categoriaEvento=" + categoriaEvento + ", autoriEvento=" + autoriEvento
+				+ ", dataInizio=" + dataInizio + ", dataFine=" + dataFine + ", postiPrenotati=" + postiPrenotati
+				+ ", prezzoBiglietto=" + prezzoBiglietto + ", recensione=" + recensione + ", votoRecensione="
+				+ votoRecensione + ", numeroCarta=" + numeroCarta + ", cvvCarta=" + cvvCarta + ", dataScadenza="
+				+ dataScadenza + ", intestatarioCarta=" + intestatarioCarta + ", utente=" + utente + ", utentiInvitati="
+				+ utentiInvitati + ", settoreDataEvento=" + settoreDataEvento + "]";
+	}
+	
+	
+	
 	
 	
 }

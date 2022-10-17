@@ -37,6 +37,11 @@ public class UtenteInvitato implements Serializable {
 		this.idUtenteInvitato = idUtenteInvitato;
 		this.codiceFiscale = codiceFiscale;
 	}
+	
+	public UtenteInvitato(String codFiscale,PrenotazioneEffettuata pr) {
+		this.codiceFiscale=codFiscale;
+		setPrenotazioneEffettuata(pr);
+	}
 
 	public long getIdUtenteInvitato() {
 		return idUtenteInvitato;
