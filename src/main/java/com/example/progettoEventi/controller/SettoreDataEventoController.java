@@ -160,9 +160,9 @@ public class SettoreDataEventoController {
 			
 			
 			//RIMOZIONE EVENTI PASSATI
-			/*if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
+			if(settoreDataEvento.getDataEvento().getDataFine().isBefore(now)) {
 				eventiPassati.add(settoreDataEvento);
-			}*/
+			}
 		}
 		ret.removeAll(eventiPassati);
 		
