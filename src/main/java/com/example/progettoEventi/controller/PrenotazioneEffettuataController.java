@@ -17,6 +17,7 @@ import com.example.progettoEventi.model.Errore;
 import com.example.progettoEventi.model.PrenotazioneEffettuata;
 import com.example.progettoEventi.model.SettoreDataEvento;
 import com.example.progettoEventi.model.SupportoPrenotazione;
+import com.example.progettoEventi.model.SupportoRecensione;
 import com.example.progettoEventi.model.Utente;
 import com.example.progettoEventi.model.UtenteInvitato;
 import com.example.progettoEventi.repository.PrenotazioneEffettuataRepository;
@@ -49,6 +50,25 @@ public class PrenotazioneEffettuataController {
 		error.setError("PrenotazioneEffettuata non trovata");
 		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@CrossOrigin(origins="*")
+	@PostMapping("/addRecensione/{id}")
+	public ResponseEntity<Object> addRecensione(@RequestBody SupportoRecensione recensione, @PathVariable long id){
+		Errore error=new Errore();
+		PrenotazioneEffettuata pre;
+		Optional<PrenotazioneEffettuata> prtEftt= prenotazioneEffettuataRepository.findById(id);
+		if(prtEftt.isPresent()) {
+			pre=prtEftt.get();
+			pre.setRecensione(recensione.getRecensione());
+			pre.setVotoRecensione(recensione.getVotoRecensione());
+			prenotazioneEffettuataRepository.save(pre);
+			return new ResponseEntity<Object>(pre, HttpStatus.OK);
+		}
+		error.setError("PrenotazioneEffettuata non trovata");
+		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	
 	@CrossOrigin(origins="*")

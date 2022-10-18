@@ -1,7 +1,10 @@
 package com.example.progettoEventi.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.progettoEventi.model.Errore;
+import com.example.progettoEventi.model.PrenotazioneEffettuata;
 import com.example.progettoEventi.model.SettoreDataEvento;
 import com.example.progettoEventi.model.Utente;
 import com.example.progettoEventi.model.UtenteLogin;
@@ -59,9 +63,17 @@ public class UtenteController {
   @GetMapping("/getUtente/{id}")
 	public ResponseEntity<Object> getUtente(@PathVariable long id){
 		Errore error=new Errore();
+		Utente utente;
+		List<PrenotazioneEffettuata>pre=new ArrayList<>();
 		Optional<Utente> ut= utenteRepository.findById(id);
 		 if (ut.isPresent()) {
-			 return new ResponseEntity<Object>(ut.get(),HttpStatus.OK);
+			 utente=ut.get();
+			 pre=utente.getPrenotazioniEffettuate();
+			 pre=pre.stream().sorted((o1, o2)->o1.getSettoreDataEvento().getDataEvento().getDataInizio().compareTo(o2.getSettoreDataEvento().getDataEvento().getDataInizio())).
+		                collect(Collectors.toList());
+			 utente.setPrenotazioniEffettuate(pre);
+			
+			 return new ResponseEntity<Object>(utente,HttpStatus.OK);
 		 }
 		 error.setError("utente non trovato");
 		 return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
