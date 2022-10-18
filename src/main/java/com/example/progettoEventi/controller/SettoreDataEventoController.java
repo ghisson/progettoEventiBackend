@@ -168,7 +168,7 @@ public class SettoreDataEventoController {
 		
 		
 		//filtro by autore
-		if(!filtro.getAutore().equals("")) {
+		if(filtro.getAutore()!=null && !filtro.getAutore().equals("")) {
 			eventiByFilter=new ArrayList<SettoreDataEvento>();
 			for(SettoreDataEvento settoreDataEvento:ret) {
 				if(!settoreDataEvento.getDataEvento().getEvento().getAutoreEvento().toLowerCase().equals(filtro.getAutore().toLowerCase())) {
@@ -179,7 +179,7 @@ public class SettoreDataEventoController {
 		}
 		
 		//filtro by categoria
-		if(!filtro.getCategoria().equals("")) {
+		if(filtro.getCategoria()!=null && !filtro.getCategoria().equals("")) {
 			eventiByFilter=new ArrayList<SettoreDataEvento>();
 			for(SettoreDataEvento settoreDataEvento:ret) {
 				if(!settoreDataEvento.getDataEvento().getEvento().getCategoriaEvento().equals(filtro.getCategoria())) {
