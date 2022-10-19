@@ -69,7 +69,7 @@ public class UtenteController {
 		 if (ut.isPresent()) {
 			 utente=ut.get();
 			 pre=utente.getPrenotazioniEffettuate();
-			 pre=pre.stream().sorted((o1, o2)->o1.getSettoreDataEvento().getDataEvento().getDataInizio().compareTo(o2.getSettoreDataEvento().getDataEvento().getDataInizio())).
+			 pre=pre.stream().sorted((o1, o2)->o1.getDataPrenotazione().compareTo(o2.getDataPrenotazione())).
 		                collect(Collectors.toList());
 			 utente.setPrenotazioniEffettuate(pre);
 			
