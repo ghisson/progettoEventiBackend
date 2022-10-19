@@ -94,8 +94,10 @@ public class SettoreDataEventoController {
 		int postiOccupati=0;
 		
 		List<SettoreDataEvento> ret=settoreDataEventoRepository.findAll();
+	
 		List<SettoreDataEvento> eventiPassati=new ArrayList<SettoreDataEvento>();
 		LocalDateTime now = LocalDateTime.now(); 		
+		
 		for(SettoreDataEvento settoreDataEvento:ret) {
 			//check dei posti disponibili
 			postiOccupati=0;
@@ -104,9 +106,9 @@ public class SettoreDataEventoController {
 				for(PrenotazioneEffettuata pr:settoreDataEvento.getPrenotazioniEffettuate()) {
 					postiOccupati+=pr.getPostiPrenotati();
 				}
-				//System.out.println(postiOccupati+" "+settoreDataEvento.getDataEvento().getEvento().getNomeEvento());
 			}
 			if(postiOccupati>=settoreDataEvento.getSettore().getNumeroPosti()) {
+				
 				eventiPassati.add(settoreDataEvento);
 			}else {
 				/*
