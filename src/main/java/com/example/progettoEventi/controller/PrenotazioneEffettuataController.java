@@ -1,6 +1,10 @@
 package com.example.progettoEventi.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +17,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.progettoEventi.model.DataEvento;
 import com.example.progettoEventi.model.Errore;
+import com.example.progettoEventi.model.Evento;
 import com.example.progettoEventi.model.PrenotazioneEffettuata;
 import com.example.progettoEventi.model.SettoreDataEvento;
 import com.example.progettoEventi.model.SupportoPrenotazione;
 import com.example.progettoEventi.model.SupportoRecensione;
 import com.example.progettoEventi.model.Utente;
 import com.example.progettoEventi.model.UtenteInvitato;
+import com.example.progettoEventi.repository.DataEventoRepository;
+import com.example.progettoEventi.repository.EventoRepository;
 import com.example.progettoEventi.repository.PrenotazioneEffettuataRepository;
 import com.example.progettoEventi.repository.SettoreDataEventoRepository;
 import com.example.progettoEventi.repository.UtenteInvitatoRepository;
@@ -39,6 +47,12 @@ public class PrenotazioneEffettuataController {
 	@Autowired
 	private UtenteInvitatoRepository utenteInvitatoRepository;
 	
+	@Autowired
+	private EventoRepository eventoRepository;
+	
+	@Autowired
+	private DataEventoRepository dataEventoRepository;
+	
 	@CrossOrigin(origins="*")
 	@GetMapping("/getPrenotazioneEffettuata/{id}")
 	public ResponseEntity<Object> getPrenotazioneEffettuata(@PathVariable long id){
@@ -50,6 +64,36 @@ public class PrenotazioneEffettuataController {
 		error.setError("PrenotazioneEffettuata non trovata");
 		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@CrossOrigin(origins="*")
+	@GetMapping("/getPrenotazioneEffettuataByIdEvento/{idEvento}")
+	public ResponseEntity<Object> getPrenotazioneEffettuataByIdEvento(@PathVariable long idEvento){
+		Errore error=new Errore();
+		Optional<Evento> evento=eventoRepository.findById(idEvento);
+		Set<SettoreDataEvento> settoreDataEvento = new HashSet<>();
+		
+		Set<PrenotazioneEffettuata> prenEff =  new HashSet<>();
+		Evento evt;
+		if(evento.isPresent()) {
+			evt=evento.get();
+			List<DataEvento> dataEvento=dataEventoRepository.findByEvento(evt);
+			if(dataEvento.size()>0) {
+				for(DataEvento dtEvt : dataEvento) {
+					settoreDataEvento.addAll(settoreDataEventoRepository.findByDataEvento(dtEvt));
+					if(settoreDataEvento.size()>0) {
+						for(SettoreDataEvento settDtEvt: settoreDataEvento) {
+							prenEff.addAll(prenotazioneEffettuataRepository.findBySettoreDataEvento(settDtEvt));
+						}
+					}
+				}
+				
+			}
+		}
+		List<PrenotazioneEffettuata> prenotazioneEffettuata = new ArrayList<>(prenEff);
+		return new ResponseEntity<Object>(prenotazioneEffettuata, HttpStatus.OK);
+	}
+	
 	
 	
 	@CrossOrigin(origins="*")
